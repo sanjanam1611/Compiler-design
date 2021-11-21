@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+        int i,j,k,nn,na,nas,ni,cs,nt;
+        printf("\nEnter the number of states:\n");
+        scanf("%d",&nn);
+        int Q[nn];
+        printf("\nEnter the state names:\n");
+        for(i=0;i<nn;i++)
+        {
+                scanf("%d",&Q[i]);
+        }
+        printf("\nEnter the number of input variables:\n");
+        scanf("%d",&na);
+        char V[40];
+        printf("\nEnter the input variables without space:\n");
+        scanf("%s",V);
+        int T[nn][na];
+        printf("\nEnter the transition table entries:\n");
+        for(i=0;i<nn;i++)
+        {
+                printf("\nEnter the transitions of state %d\t\n",Q[i]);
+                for(j=0;j<na;j++)
+                        {
+                                printf("\nEnter the transition table entries for variable %c\t",V[j]);
+                                scanf("%d",&T[i][j]);
+                        }
+        }
+        printf("\nEnter the number of accepting states\n");
+        scanf("%d",&nas);
+        int As[nas];
+        printf("\nEnter the accepting states:\n");
+        for(i=0;i<nas;i++)
+        {
+                scanf("%d",&As[i]);
+        }
+        printf("\nEnter the start state:\n");
+        scanf("%d",&cs);
+        int st=cs;
+        int index,index2,res,len,count;
+        char input[30];
+        printf("\nEnter the number of tries\n");
+        scanf("%d",&nt);
+        for(k=0;k<nt;k++)
+        {
+                printf("\nEnter the input string:\n");
+                scanf("%s",input);
+                len=strlen(input);
+                index2=-1;
+                index=-1;
+                for(i=0;i<len;i++)
+                {
+                        for(j=0;j<nn;j++)
+                        {
+                                if(cs==Q[j])
+                                        index2=j;
+                        }
+                        for(j=0;j<na;j++)
+                        {
+                                if(input[i]==V[j])
+                                        index=j;
+                        }
+                        if(index==-1|index2==-1)
+                                break;
+                        cs=T[index2][index];
+                        if(cs==-1)
+                                break;
+                }
+                res=0;
+                if(cs!=-1)
+                {
+                        for(i=0;i<nas;i++)
+                        {
+                                if(cs==As[i])
+                                        res=1;
+                        }
+                }
+                if(res==1)
+                        printf("\nThe entered string is accepted\n");
+                else
+                        printf("\nThe entered dtring is not accepted\n");
+                cs=st;
+        }
+}
+
+
+
